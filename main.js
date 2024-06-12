@@ -1,6 +1,7 @@
 // import "https://html2canvas.hertzen.com/dist/html2canvas.min.js";
 // import "https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js";
 let result;
+let bgImg = "";
 const buildQuiz = () => {
   // variable to store the HTML output
   const output = [];
@@ -47,10 +48,13 @@ const showNextPage = () => {
 }
 
 const showPoster = () => {
-  showNextPage();
-  const username = document.getElementById("username");
-  console.log(username)
+  const username = document.getElementById("username").value;
+  console.log(document.getElementById("username").value)
   console.log(document.getElementsByClassName("username"))
+  showNextPage();
+  document.getElementById("poster-username").innerHTML = username; 
+  console.log(bgImg)
+  document.getElementById('results').style.backgroundImage = bgImg;
 
 }
 
@@ -62,14 +66,15 @@ const startAction = () => {
 
 const showSlide = (n) => {
   slides[currentSlide].classList.remove('active-slide');
-  document.getElementById('quiz-page').style.backgroundImage = "url('img/quiz1.jpg')"
+  let url = 'url("img/question/'+n+'.jpg")'
+  document.getElementById('quiz-page').style.backgroundImage =  url
   slides[n].classList.add('active-slide');
   document.getElementById('quiz-btns').style.justifyContent = "space-between"
   currentSlide = n;
   if (currentSlide === 0) {
 
     previousButton.style.display = 'none';
-    document.getElementById('quiz-btns').style.justifyContent = "end"
+    document.getElementById('quiz-btns').style.justifyContent = "center"
 
   } else {
     previousButton.style.display = 'inline-block';
@@ -167,18 +172,18 @@ const showResults = () => {
   });
 
 
-  let finalAnswer = calcuateResult(answers)
-  const result = [];
+  let quizResult = calcuateResult(answers)
+  // const result = [];
 
-  result.push(
-    ` 
-     <div class = 'finalAnser' style="width: 100%; height:100%">
-     <image src ='img/poster/${finalAnswer}.jpg' style="width: 100%; height:100%">
-      </div>
-`
-  );
+  bgImg = 'url(img/poster/'+quizResult+'.jpg)'
+// result.push(
+//     ` 
+//      <div class = 'finalAnser' style="width: 100%; height:100%" style = "background-image:${bgImg}">
+//       </div>
+// `
+//   );
 
-  resultsContainer.innerHTML = result.join('');
+//   resultsContainer.innerHTML = result.join('');
 
 }
 
